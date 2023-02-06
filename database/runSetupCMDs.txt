@@ -1,0 +1,2 @@
+sudo mysql -u root
+source /[path to source]/setup.sql
