@@ -1,10 +1,9 @@
-
-<?php 
-require_once __DIR__ . '/vendor/autoload.php';
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
-
+<?php
+require_once('rabbitmqphp_example/path.inc');
+require_once('rabbitmqphp_example/get_host_info.inc');
+require_once('rabbitmqphp_example/rabbitMQLib.inc');
 ?>
+
 <form method="POST">
     <h1>IT 490 Project</h1>
     <div>
@@ -23,24 +22,30 @@ if(isset($_POST["login"])){
     $username = $_POST["username"] ;
     $password = $_POST["password"];
 
-    echo "Welcome ".$username."!";
+    $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+    if (isset($argv[1]))
+    {
+    $msg = $argv[1];
+    }
+    else
+    {
+    $msg = "Passing Login Information";
+    }
+
+    $request = array();
+    $request['type'] = "Login";
+    $request['username'] = $username;
+    $request['password'] = $password;
+    $request['message'] = $msg;
+    $response = $client->send_request($request);
+
+    echo "client received response: ".PHP_EOL;
+    print_r($response);
+    echo "\n\n";
+    
+    echo $argv[0]." END".PHP_EOL;
 }
-
-
-$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-$channel = $connection->channel();
-
-$channel->queue_declare('login', false, false, false, false);
-
-$msg = new AMQPMessage($username);
-$channel->basic_publish($msg, '', 'login');
-
-echo " [x] Sent the username.\n";
-
-$channel->close();
-$connection->close();
 ?>
-
 
 
 
