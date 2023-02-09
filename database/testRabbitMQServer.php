@@ -27,7 +27,7 @@ function doLogin($username,$password)
   }
   // lookup username in database
   // check password
-  if($request['pass']==$password)
+  if($response['pass']==$password)
   {
     return true;
   }
