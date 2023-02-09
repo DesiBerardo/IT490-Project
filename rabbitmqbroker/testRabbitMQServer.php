@@ -32,7 +32,7 @@ function doLogin($username,$password)
     echo $argv[0]." END".PHP_EOL;
     // check password
     $hash = $response["pass"];
-    if (password_verify($password, $hash))
+    if ($response)
     {
       return true;
     }
@@ -53,12 +53,13 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
-    case "login":
+    case "Login":
       return doLogin($request['username'],$request['password']);
+      //return "this message is false";
     case "validate_session":
       return doValidate($request['sessionId']);
   }
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");
+  return array("returnCode" => '0', 'message'=>"Server recieved request and processeed");
 }
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
