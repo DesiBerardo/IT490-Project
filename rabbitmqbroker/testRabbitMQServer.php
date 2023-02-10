@@ -29,10 +29,9 @@ function doLogin($username,$password)
     print_r($response);
     echo "\n\n";
     
-    echo $argv[0]." END".PHP_EOL;
+    //echo $argv[0]." END".PHP_EOL;
     // check password
-    $hash = $response["pass"];
-    if ($response)
+    if ($response == true)
     {
       return true;
     }
