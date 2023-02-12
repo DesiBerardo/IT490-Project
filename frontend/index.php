@@ -20,8 +20,8 @@ require_once('rabbitMQLib.inc');
 <?php
 if(isset($_POST["login"])){ 
     $username = $_POST["username"] ;
-    $password = $_POST["password"];
-
+    $password = hash('sha256',$_POST["password"]);
+    echo ($password);
     $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
     if (isset($argv[1]))
     {
