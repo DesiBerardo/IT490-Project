@@ -12,7 +12,7 @@ require_once('rabbitMQLib.inc');
     </div>
     <div>
         <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
+        <input type="password" id="pw" name="password" required minlength="2" />
     </div>
     <input type="submit" value="Login" name="login" />
 </form>
@@ -33,19 +33,19 @@ if(isset($_POST["login"])){
     }
 
     $request = array();
-    $request['type'] = "login";
+    $request['type'] = "Login";
     $request['username'] = $username;
     $request['password'] = $password;
     $request['message'] = $msg;
     $response = $client->send_request($request);
 
-    if(isset($response)){
-    echo($response);
+    if($response){
+    echo("Response : \n".$response);
+    header("Location: http://www.addy.com/home.php"); 
     }
     else{
-        echo "Unknown if message delivered.";
+        echo "Unknown user. Try again.";
     }
-
 }
 ?>
 
