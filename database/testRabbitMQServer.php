@@ -25,6 +25,11 @@ function doLogin($username,$password)
 	  echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
 	  exit(0);
   }
+  if($response->num_rows === 0)
+  {
+    echo "No match!";
+    return false;
+  }
   // lookup username in database
   // check password
   $unpackedResult=$response->fetch_assoc();
