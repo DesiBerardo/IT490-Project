@@ -33,13 +33,16 @@ function doLogin($username,$password)
     // check password
     if ($response == true)
     {
+      echo "Successful login!";
       return true;
     }
     else
     {
+      echo "you are a loser LOSER";
       return false;
     }
     //return false if not valid
+    echo "how are you here";
 }
 
 function requestProcessor($request)
