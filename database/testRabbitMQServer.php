@@ -6,7 +6,7 @@ require_once('rabbitMQLib.inc');
 
 function doLogin($username,$password)
 {
-  $mydb = new mysqli('127.0.0.1','root','12345','userdb');
+  $mydb = new mysqli('127.0.0.1','testuser','12345','userdb');
 
   if ($mydb->errno != 0)
   {
@@ -16,7 +16,7 @@ function doLogin($username,$password)
 
   echo "successfully connected to database".PHP_EOL;
 
-  $query = "select * from users where username=$username;";
+  $query = "select * from users where username='$username';";
 
   $response = $mydb->query($query);
   if ($mydb->errno != 0)
@@ -27,9 +27,15 @@ function doLogin($username,$password)
   }
   // lookup username in database
   // check password
-  if($response['pass']==$password)
+  $unpackedResult=$response->fetch_assoc();
+  if($unpackedResult['pass']==$password)
   {
+    echo "Found the match and returning!";
     return true;
+  }
+  else
+  {
+    return false;
   }
   //return false if not valid
   return false;  
@@ -45,7 +51,7 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
-    case "login":
+    case "database":
       return doLogin($request['username'],$request['password']);
     case "validate_session":
       return doValidate($request['sessionId']);
