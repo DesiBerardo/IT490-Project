@@ -40,6 +40,7 @@ function doLogin($username,$password)
   }
   else
   {
+    echo "Wrong password!";
     return false;
   }
   //return false if not valid
