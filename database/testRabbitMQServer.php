@@ -44,6 +44,7 @@ function doLogin($username,$password)
     return false;
   }
   //return false if not valid
+  echo "Hit the catch-all return";
   return false;  
 }
 
