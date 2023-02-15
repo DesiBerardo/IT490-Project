@@ -40,9 +40,11 @@ function doLogin($username,$password)
   }
   else
   {
+    echo "Wrong password!";
     return false;
   }
   //return false if not valid
+  echo "Hit the catch-all return";
   return false;  
 }
 
