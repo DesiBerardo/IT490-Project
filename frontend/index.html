@@ -10,7 +10,8 @@ function HandleLoginResponse(response)
 }
 
 function SendLoginRequest(username,password)
-{
+{   
+    console.log("inside sendLoginRequest");
 	var request = new XMLHttpRequest();
 	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -51,7 +52,7 @@ function SendLoginRequest(username,password)
         console.log(form.elements["username"].value);
         console.log(form.elements["password"].value);
         
-        SendLoginRequest(username,password);
+        SendLoginRequest(username , password);
     }
     
 </script>     
