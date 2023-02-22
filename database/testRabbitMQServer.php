@@ -7,7 +7,7 @@ require_once('rabbitMQLib.inc');
 function doLogin($username,$password)
 {
   $mydb = new mysqli('127.0.0.1','testuser','12345','userdb');
-
+  $password = hash('sha256', $password);
   if ($mydb->errno != 0)
   {
 	  echo "failed to connect to database: ". $mydb->error . PHP_EOL;
