@@ -9,9 +9,17 @@ function HandleLoginResponse(response)
 	document.getElementById("textResponse").innerHTML = "response: "+text+"<p>";
 }
 
-function SendLoginRequest(username,password)
+function SendLoginRequest()
 {   
-    console.log("inside sendLoginRequest");
+    
+
+    const form = document.getElementById('loginForm');
+    var username = String(form.elements["username"].value);
+    var password = String(form.elements["password"].value);
+        
+    //console.log(form.elements["username"].value);
+    //console.log(form.elements["password"].value);
+    
 	var request = new XMLHttpRequest();
 	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -21,16 +29,29 @@ function SendLoginRequest(username,password)
 		if ((this.readyState == 4)&&(this.status == 200))
 		{
 			HandleLoginResponse(this.responseText);
-		}		
+            
+            
+		}
+        else{
+            console.log("Error, response not recieved.");
+        }		
 	}
 	request.send("type=login&uname="+username+"&pword="+password);
+    console.log("at end of sendLoginRequest", username , password);
+    
 }
+
+function sendLoginInfo() {
+        //not in use currently, code shifted to sendloginrequest
+        
+        SendLoginRequest(username , password);
+    }
 </script>
 
 <body>
       
-<div id="textResponse">
-<form method="POST" id="loginForm" onsubmit="sendLoginInfo()" accept-charset="utf-8">
+
+<form method="POST" id="loginForm"  accept-charset="utf-8">
     <h1>IT 490 Project: User Auth Page</h1>
     <div>
         <label for="username">Username</label>
@@ -40,23 +61,23 @@ function SendLoginRequest(username,password)
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required minlength="2" />
     </div>
-    <input type="submit" value="Login" name="login" />
+    <input type="submit" value="Login" name="Login" />
 </form>
-
-<script>
-    function sendLoginInfo() {
-        const form = document.getElementById('loginForm');
-        var username = form.elements["username"].value;
-        var password = form.elements["password"].value;
-        
-        console.log(form.elements["username"].value);
-        console.log(form.elements["password"].value);
-        
-        SendLoginRequest(username , password);
-    }
-    
-</script>     
+<div id="textResponse">
+    awaiting response
 </div>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", login);
+
+    function login(e) {
+    e.preventDefault();
+    console.log('caught!');
+
+    // more code goes here...
+    SendLoginRequest();
+}
+    
+    </script>
 </body>
 
 

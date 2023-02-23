@@ -3,28 +3,21 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-?>
-
-
-
-<?php
 if (!isset($_POST))
 {
 	$msg = "NO POST MESSAGE SET.";
 	echo json_encode($msg);
 	exit(0);
 }
-$request = $_POST["type"];
-$response = "unsupported request type";
+$request = $_POST;
+$response = "unsupported request type.";
 switch ($request["type"])
 {
 	case "login":
+        $username = $request["uname"] ;
+        $password = $request["pword"];
 		
-        $username = $_POST["uname"] ;
-        $password = $_POST["pword"];
-        echo ("testing");
-        echo ($username);
-        echo ($password);
+
         $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
         if (isset($argv[1]))
         {
@@ -35,30 +28,25 @@ switch ($request["type"])
         $msg = "Passing Login Information";
         }
 
-        $request = array();
-        $request['type'] = "Login";
-        $request['username'] = $username;
-        $request['password'] = $password;
-        $request['message'] = $msg;
-        $response = $client->send_request($request);
+        $request_array = array();
+        $request_array['type'] = "Login";
+        $request_array['username'] = $username;
+        $request_array['password'] = $password;
+        $request_array['message'] = $msg;
+        $rmq_response = $client->send_request($request_array);
 
-        if($response){
-        echo("Response : \n".$response);
+        if($rmq_response){
+        //echo("Response : \n".$rmq_response);
         header("Location: http://www.addy.com/home.php"); 
         }
         else{
-            echo "Unknown user. Try again.";
+            //echo "Unknown user. Try again.";
         }
-    break;
+
+        $response = "login, yeah we can do that. Here is the username: " . $request["uname"]. " RMQ: ". $rmq_response;
+	break;
 }
 echo json_encode($response);
 exit(0);
 
-
-    
-
 ?>
-
-
-
-
