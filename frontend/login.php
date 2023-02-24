@@ -16,8 +16,9 @@ switch ($request["type"])
 	case "login":
         $username = $request["uname"] ;
         $password = $request["pword"];
-		
-
+		$response = "login, yeah we can do that. Here is the username: " . $request["uname"];
+        $fake_response = 1 ;
+        /*
         $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
         if (isset($argv[1]))
         {
@@ -42,11 +43,10 @@ switch ($request["type"])
         else{
             //echo "Unknown user. Try again.";
         }
-
-        $response = "login, yeah we can do that. Here is the username: " . $request["uname"]. " RMQ: ". $rmq_response;
+        */
 	break;
 }
-echo json_encode($response);
+echo json_encode($fake_response);
 exit(0);
 
 ?>

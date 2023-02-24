@@ -7,6 +7,11 @@ function HandleLoginResponse(response)
     console.log(text);
 //	document.getElementById("textResponse").innerHTML = response+"<p>";	
 	document.getElementById("textResponse").innerHTML = "response: "+text+"<p>";
+    
+    if(text === 1){
+    window.location.href= "./home.php", true;
+    return false ;
+       }
 }
 
 function SendLoginRequest()
@@ -30,11 +35,8 @@ function SendLoginRequest()
 		{
 			HandleLoginResponse(this.responseText);
             
-            
 		}
-        else{
-            console.log("Error, response not recieved.");
-        }		
+        	
 	}
 	request.send("type=login&uname="+username+"&pword="+password);
     console.log("at end of sendLoginRequest", username , password);
