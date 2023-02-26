@@ -18,7 +18,7 @@ switch ($request["type"])
         $password = $request["pword"];
 		$response = "login, yeah we can do that. Here is the username: " . $request["uname"];
         $fake_response = 1 ;
-        /*
+        
         $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
         if (isset($argv[1]))
         {
@@ -34,19 +34,21 @@ switch ($request["type"])
         $request_array['username'] = $username;
         $request_array['password'] = $password;
         $request_array['message'] = $msg;
-        $rmq_response = $client->send_request($request_array);
+  
+        $response = $client->send_request($request_array);
 
-        if($rmq_response){
+        if($response){
         //echo("Response : \n".$rmq_response);
-        header("Location: http://www.addy.com/home.php"); 
+        //header("Location: http://www.addy.com/home.php"); 
         }
         else{
             //echo "Unknown user. Try again.";
         }
-        */
+        
+        
 	break;
 }
-echo json_encode($fake_response);
+echo json_encode($response);
 exit(0);
 
 ?>

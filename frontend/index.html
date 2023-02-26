@@ -8,16 +8,18 @@ function HandleLoginResponse(response)
 //	document.getElementById("textResponse").innerHTML = response+"<p>";	
 	document.getElementById("textResponse").innerHTML = "response: "+text+"<p>";
     
-    if(text === 1){
+    console.log("This is the server response: " +text);
+    if(text === true){
     window.location.href= "./home.php", true;
     return false ;
        }
+    else{
+        document.getElementById("textResponse").innerHTML = "Sorry, invalid login credentials.";
+    }
 }
 
 function SendLoginRequest()
 {   
-    
-
     const form = document.getElementById('loginForm');
     var username = String(form.elements["username"].value);
     var password = String(form.elements["password"].value);
@@ -34,15 +36,10 @@ function SendLoginRequest()
 		if ((this.readyState == 4)&&(this.status == 200))
 		{
 			HandleLoginResponse(this.responseText);
-            
 		}
-        	
 	}
 	request.send("type=login&uname="+username+"&pword="+password);
-    console.log("at end of sendLoginRequest", username , password);
-    
 }
-
 function sendLoginInfo() {
         //not in use currently, code shifted to sendloginrequest
         
