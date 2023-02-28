@@ -1,7 +1,8 @@
 <?php
 
-
-$flight_search_url = "https://www.test.api.amadeus.com/v2/shopping/flight-offers";
+$auth_token = "4pkOhoG6TS8abGzm26OxT0zaLd2g
+" ;
+$flight_search_url = "https://test.api.amadeus.com/v2/shopping/flight-offers";
 
 $body = array(
     "currencyCode"=> "USD",
@@ -39,14 +40,14 @@ $body = array(
 
 $headers = [
     'Content-type: X-HTTP-Method-Override',
-    'Authorization: ${auth_token}',
+    'Authorization: Bearer '.$auth_token,
 ];
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $flight_search_url);
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 $data = curl_exec($curl);
-var_dump($data);
+//var_dump($data);
 curl_close($curl);
 
 if(curl_errno($curl)){
