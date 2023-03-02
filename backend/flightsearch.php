@@ -1,6 +1,30 @@
 <?php
+require "api_keys.php" ;
 
-$auth_token = "ubSNhYOzk4UGB9NoDTfZvw6U5Nam" ;
+
+//getting api bearer token 
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/security/oauth2/token');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=$api_key&client_secret=$api_secret");
+
+$headers = array();
+$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+$decoded_result = json_decode($result, true);
+$bearer_token = $decoded_result["access_token"];
+if (curl_errno($ch)) {
+    //echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
+
+
+
+
 $flight_search_url = "https://test.api.amadeus.com/v2/shopping/flight-offers";
 
 $body = [
@@ -71,7 +95,7 @@ $headers = [
     'X-HTTP-Method-Override: GET',
     'Content-type: application/json',
     'accept: application/json',
-    'Authorization: Bearer '.$auth_token,
+    'Authorization: Bearer '.$bearer_token,
     sprintf('Content-Length: %d', strlen(json_encode($body)))
 ];
 
@@ -82,9 +106,8 @@ curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($body));
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
  
 $data = curl_exec($curl);
-echo(json_encode($body ));
+echo ($data);
 curl_close($curl);
-
 if(curl_errno($curl)){
     //echo 'Curl error: ' . curl_error($curl);
 }
