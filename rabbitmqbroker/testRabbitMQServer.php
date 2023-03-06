@@ -3,46 +3,19 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
+require_once('rabbitFuncs.php');
 
-function doLogin($username,$password)
+function logger($log_msg)
 {
-    // lookup username in database
-    $client = new rabbitMQClient("rabbitmqdb.ini","testServer");
-    if (isset($argv[1]))
-    {
-      $msg = $argv[1];
-    }
-    else
-    {
-      $msg = "gimmie dat data white boy";
-    }
-    
-    $request = array();
-    $request['type'] = "database";
-    $request['username'] = $username;
-    $request['password'] = $password;
-    $request['message'] = $msg;
-    $response = $client->send_request($request);
-    //$response = $client->publish($request);
-    
-    echo "client received response: ".PHP_EOL;
-    print_r($response);
-    echo "\n\n";
-    
-    //echo $argv[0]." END".PHP_EOL;
-    // check password
-    if ($response == true)
-    {
-      echo "Successful login!";
-      return true;
-    }
-    else
-    {
-      echo "you are a loser LOSER";
-      return false;
-    }
-    //return false if not valid
-    echo "how are you here";
+  $log_filename = '/var/log/rabbit_log';
+  if (!file_exists($log_filename))
+  {
+      // create directory/folder uploads.
+      mkdir($log_filename, 0777, true);
+  }
+  $log_msg = print_r($log_msg, true);
+  $log_file_data = $log_filename.'/log_' . 'rabbit' . '.log';
+  file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
 }
 
 function requestProcessor($request)
@@ -57,6 +30,7 @@ function requestProcessor($request)
   {
     case "Login":
       return doLogin($request['username'],$request['password']);
+    case "Register":
       //return "this message is false";
     case "validate_session":
       return doValidate($request['sessionId']);
