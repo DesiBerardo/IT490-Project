@@ -1,3 +1,5 @@
 <?php 
-echo "KANSAS CITY FOR LIFE!"
+//require ("nav.php");
+
+echo "It's here!";
 ?>

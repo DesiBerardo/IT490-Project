@@ -1,3 +1,5 @@
+<?php include ("nav.php") ?>
+
 <html>
     <h1> Plan your trip here! </h1>
     <nav>

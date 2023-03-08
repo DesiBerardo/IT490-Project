@@ -38,11 +38,11 @@ switch ($request["type"])
         $response = $client->send_request($request_array);
 
         if($response){
-        //echo("Response : \n".$rmq_response);
-        //header("Location: http://www.addy.com/home.php"); 
+        echo("Response : \n".$rmq_response);
+        header("Location: http://www.addy.com/home.php"); 
         }
         else{
-            //echo "Unknown user. Try again.";
+            echo "Unknown user. Try again.";
         }
         
         

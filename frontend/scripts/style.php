@@ -1,10 +1,9 @@
-<?php
-//include functions here so we can have it on every page that uses the nav bar
-//that way we don't need to include so many other files on each page
-//nav will pull in functions and functions will pull in db
-require(__DIR__."/../lib/functions.php");
-?>
 <!DOCTYPE html>
+<html>
+<head>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
 ul {
@@ -31,12 +30,16 @@ li {
 li a:hover {
   background-color: #111;
 }
+
 </style>
+</head>
 <nav>
     <ul><!--Home will have recommended travel points and events-->
         <li><a href="home.php">Home</a></li>
         <!--Plan a trip. Events, flights, ect-->
         <li><a href="schedule.php">Plan a Outing!</a></li>
-        <li><a href="aboutus.php">About us</a></li>
+        <!-- <li><a href="aboutus.php">About us</a></li> -->
     </ul>
 </nav>
+</body>
+</html>
