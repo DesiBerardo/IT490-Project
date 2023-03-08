@@ -1,6 +1,18 @@
 #!/usr/bin/php
 <?php
 
+function logger($log_msg)
+{
+  $log_filename = 'log/rabbit';
+  if (!file_exists($log_filename))
+  {
+      // create directory/folder uploads.
+      mkdir($log_filename, 0777, true);
+  }
+  $log_msg = print_r($log_msg, true);
+  $log_file_data = $log_filename.'/log_' . 'rabbit' . '.log';
+  file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
+}
 
 function doLogin($username,$password)
 {
@@ -20,6 +32,7 @@ function doLogin($username,$password)
     $request['username'] = $username;
     $request['password'] = $password;
     $request['message'] = $msg;
+    $request['time'] = time();
     $response = $client->send_request($request);
     //$response = $client->publish($request);
     
@@ -32,11 +45,12 @@ function doLogin($username,$password)
     if ($response == true)
     {
       echo "Successful login! at " . time() . "\n";
+      logger(time() . ": User: " . $username . " Sucessful Login");
       return true;
     }
     else
     {
-      echo "you are a loser LOSER at " . time() . "\n";
+      logger(time() . ": User: " . $username . " Login Failed");
       return false;
     }
     //return false if not valid
