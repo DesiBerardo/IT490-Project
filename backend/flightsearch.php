@@ -39,15 +39,7 @@ $body = [
           'time' => '10:00:00',
         ],
       ],
-      1 => [
-        'id' => '2',
-        'originLocationCode' => 'MAD',
-        'destinationLocationCode' => 'BOS',
-        'departureDateTimeRange' => [
-          'date' => '2023-11-04',
-          'time' => '17:00:00',
-        ],
-      ],
+      
     ],
     'travelers' => [
       0 => [
