@@ -118,51 +118,40 @@ function sendLoginInfo() {
       <div class="flight" id="flightbox">
         
         <form id="flight-form" type="POST">
-        <!-- TRIP TYPE -->
-        <div id="flight-type">
-          <div class="info-box">
-            <input type="radio" name="flight-type" value="Return" id="return" checked />
-            <label for="return">RETURN</label>
-          </div>
-          <div class="info-box">
-            <input type="radio" name="flight-type" value="Single" id="one-way" />
-            <label for="one-way">ONE WAY</label>
-          </div>
-        </div>
+        
         
         <!-- FROM/TO -->
         <div id="flight-depart">
           <div class="info-box">
-            <label for="">LEAVING FROM</label>
+            <label for="">Departing City IATA Code</label>
             <input type="text" id="origin" />
             <div id="depart-res"></div>
           </div>
           <div class="info-box" id="arrive-box">
-            <label for="">ARRIVING AT</label>
+            <label for="">Arriving City IATA Code</label>
             <input type="text" id="destination" />
             <div id="arrive-res"></div>
           </div>
         </div>
         
         <!-- FROM/TO -->
-        <div id="flight-dates">
-          <div class="info-box">
-            <label for="">LEAVING ON</label>
+        <div id="flight-dates" >
+          <div class="info-box" >
+            <label for="" >LEAVING ON</label>
             <input type="date" id="dep-date" min="<?= date('Y-m-d'); ?>" />
             <input type="time" id="dep-time"/>
           </div>
-          <div class="info-box" id="return-box">
-            <label for="">RETURNING ON</label>
-            <input type="date" id="return-date" />
-            <input type="time" id="return-time"/>
 
+          <div class="info-box" >
+            <label for="">Please enter the full date and departure time in your local timezone including the AM/PM designation.</label>
           </div>
+          
         </div>
         
         <!-- PASSENGER INFO -->
         <div id="flight-info">
           <div class="info-box">
-            <label for="adults">ADULTS</label>
+            <label for="adults">Travelling Passengers</label>
             <select name="adults" id="adults">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -170,6 +159,7 @@ function sendLoginInfo() {
               <option value="4">4</option>
             </select>
           </div>
+          <!--
           <div class="info-box">
             <label for="children">CHILDREN</label>
             <select name="children" id="children">
@@ -179,6 +169,7 @@ function sendLoginInfo() {
               <option value="3">3</option>
             </select>
           </div>
+            -->
           <div class="info-box">
             <label for="class-type">CLASS</label>
             <select name="class-type" id="class-type">
