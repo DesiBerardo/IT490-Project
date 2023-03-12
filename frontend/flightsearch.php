@@ -200,6 +200,8 @@ function sendLoginInfo() {
     function login(e) {
     e.preventDefault();
     console.log('caught!');
+     
+    document.getElementById("flight-results").innerHTML= "";
 
     // more code goes here...
     SendBackendRequest();
