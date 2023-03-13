@@ -28,11 +28,12 @@ function HandleAPIResponse(response)
         document.getElementById("flight-results").innerHTML+="\n\nOffer ID: " + response["data"][index]["id"];
         document.getElementById("flight-results").innerHTML+=" Total Trip Cost: " + response["data"][index]["price"]["total"]+" "+response["data"][index]["price"]["currency"];
 
+        
         var table = document.createElement("table") ;
         document.getElementById("flight-results").appendChild(table);
         table.className="table";
 
-        var orderArrayHeader = ["Segment", "Flight Number", "Departure Time", "Arrival Time"];
+        var orderArrayHeader = ["Book","Segment", "Flight Number", "Departure Time", "Arrival Time"];
         var thead = document.createElement('thead');
 
         table.appendChild(thead);
@@ -44,7 +45,7 @@ function HandleAPIResponse(response)
 
         
         for (let indexItin = 0; indexItin < response["data"][index]["itineraries"].length; ++indexItin){
-            
+          
             for (let indexSeg = 0; indexSeg < response["data"][index]["itineraries"][indexItin]["segments"].length; ++indexSeg){
                 row = table.insertRow();
                 table.appendChild(row);
@@ -53,7 +54,9 @@ function HandleAPIResponse(response)
                 cell.appendChild(newText);
 
                 var cell = row.insertCell();
-                var newText = document.createTextNode(response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["carrierCode"]+" "+response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["number"]);
+                var carrier = response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["carrierCode"];
+                var flightNumber = response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["number"];
+                var newText = document.createTextNode(carrier+" "+flightNumber);
                 cell.appendChild(newText);
 
                 var cell = row.insertCell();
@@ -66,7 +69,15 @@ function HandleAPIResponse(response)
                 var newText = document.createTextNode(arrivalTiming.slice(0,9)+" "+arrivalTiming.slice(11,19));
                 cell.appendChild(newText);
 
+                
+                //var newText = document.createTextNode(arrivalTiming.slice(0,9)+" "+arrivalTiming.slice(11,19));
+                //cell.appendChild(newText);
+
             }
+          var arrStr = encodeURIComponent(JSON.stringify(response["data"][index]["itineraries"][indexItin]["segments"]));
+          var bookingLink = "/flightbooking.php?array="+arrStr;
+          document.getElementById("flight-results").innerHTML+= '<a href="'+ bookingLink +'" >BOOK TRIP</a>';
+          
         }
     }
 }
