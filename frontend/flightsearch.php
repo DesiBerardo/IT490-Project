@@ -5,7 +5,7 @@
 
 <script>
 
-function HandleAPIResponse(response)
+function HandleAPIResponse(response, origin, destination, classType)
 {
     //api response was giving a random extra digit at the end of the response so I needed to slice it out
     //console.log(response);
@@ -26,14 +26,15 @@ function HandleAPIResponse(response)
     for (let index = 0; index < response["meta"]["count"]; ++index){
         
         document.getElementById("flight-results").innerHTML+="\n\nOffer ID: " + response["data"][index]["id"];
-        document.getElementById("flight-results").innerHTML+=" Total Trip Cost: " + response["data"][index]["price"]["total"]+" "+response["data"][index]["price"]["currency"];
+        var cost = response["data"][index]["price"]["total"]+" "+response["data"][index]["price"]["currency"];
+        document.getElementById("flight-results").innerHTML+=" Total Trip Cost: " + cost ;
 
         
         var table = document.createElement("table") ;
         document.getElementById("flight-results").appendChild(table);
         table.className="table";
 
-        var orderArrayHeader = ["Book","Segment", "Flight Number", "Departure Time", "Arrival Time"];
+        var orderArrayHeader = ["Segment", "Flight Number", "Departure Time", "Arrival Time"];
         var thead = document.createElement('thead');
 
         table.appendChild(thead);
@@ -61,12 +62,12 @@ function HandleAPIResponse(response)
 
                 var cell = row.insertCell();
                 var departTiming = response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["departure"]["at"]
-                var newText = document.createTextNode(departTiming.slice(0,9)+" "+departTiming.slice(11,19));
+                var newText = document.createTextNode(departTiming.slice(0,10)+" "+departTiming.slice(11,19));
                 cell.appendChild(newText);
 
                 var cell = row.insertCell();
                 var arrivalTiming = response["data"][index]["itineraries"][indexItin]["segments"][indexSeg]["arrival"]["at"]
-                var newText = document.createTextNode(arrivalTiming.slice(0,9)+" "+arrivalTiming.slice(11,19));
+                var newText = document.createTextNode(arrivalTiming.slice(0,10)+" "+arrivalTiming.slice(11,19));
                 cell.appendChild(newText);
 
                 
@@ -74,9 +75,11 @@ function HandleAPIResponse(response)
                 //cell.appendChild(newText);
 
             }
-          var arrStr = encodeURIComponent(JSON.stringify(response["data"][index]["itineraries"][indexItin]["segments"]));
-          var bookingLink = "/flightbooking.php?array="+arrStr;
-          document.getElementById("flight-results").innerHTML+= '<a href="'+ bookingLink +'" >BOOK TRIP</a>';
+            
+            var arrStr = encodeURIComponent(JSON.stringify(response["data"][index]["itineraries"][indexItin]["segments"]));
+            var duration = response["data"][index]["itineraries"][indexItin]["duration"].slice(2,response["data"][index]["itineraries"][indexItin]["duration"].length) ;
+            var bookingLink = "/flightbooking.php?destination="+destination+"&origin="+origin+"&cost="+cost+"&duration="+duration+"&class="+classType+"&array="+arrStr;
+            document.getElementById("flight-results").innerHTML+= '<a href="'+ bookingLink +'" >BOOK TRIP</a>'+"<br><br>";
           
         }
     }
@@ -108,7 +111,7 @@ function SendBackendRequest()
 		{
             //console.log(this.responseText);
 
-            HandleAPIResponse(this.responseText);
+            HandleAPIResponse(this.responseText , origin, destination, classType);
 
 		}
 	}
