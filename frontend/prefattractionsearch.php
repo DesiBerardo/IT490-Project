@@ -140,7 +140,7 @@ function sendLoginInfo() {
         <!-- Category Search-->
         <div id="attractions-list" >
           <div class="info-box" >
-            <label for="" >Destination Picker</label>
+            <label for="" >Category Preference Picker</label>
             <select id="categories" multiple style ="height:100px" >
                     <option value="SIGHTS">SIGHTS</option>
                     <option value="SHOPPING">SHOPPING</option>
